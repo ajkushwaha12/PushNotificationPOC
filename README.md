@@ -52,7 +52,7 @@ Copy code
 ### 2. Clone & Build
 
 ```bash
-git clone https://github.com/your-username/PushNotificationPOC.git
+git clone https://github.com/ajkushwaha12/PushNotificationPOC.git
 cd PushNotificationPOC
 dotnet restore
 3. Generate VAPID Keys
