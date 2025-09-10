@@ -1,0 +1,6 @@
+@PushPoCApp_HostAddress = http://localhost:5195
+
+GET {{PushPoCApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

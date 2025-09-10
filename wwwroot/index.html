@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Web Push PoC</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    button { margin: 6px; padding: 8px 12px; }
+    input { padding: 6px; margin-right: 8px; }
+    #log { white-space: pre-wrap; background: #f7f7f7; padding: 8px; border: 1px solid #ddd; height: 160px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h2>Web Push PoC (Chrome / Firefox / Edge)</h2>
+
+  <div>
+    <button id="btnRegister">Register Service Worker & Subscribe</button>
+    <button id="btnUnsubscribe">Unsubscribe</button>
+  </div>
+
+  <div style="margin-top:18px;">
+    <input id="title" placeholder="Title" value="Test Notification" />
+    <input id="body" placeholder="Body" value="Hello from server" />
+    <button id="btnSend">Send Test Notification</button>
+  </div>
+
+  <h3 style="margin-top:18px;">Logs</h3>
+  <div id="log"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
