@@ -1,110 +1,123 @@
-# 🚀 Web Push Notifications POC (.NET + VAPID)
+ººWeb Push Notifications POC (.NET 8 + VAPID)ºº
 
-This is a **Proof of Concept (POC)** project that demonstrates how to implement **Web Push Notifications** in a browser using **ASP.NET Core (Controller-based API)**, **WebPush (tpeczek)**, and **VAPID authentication**.  
-It shows how a client (browser) can **subscribe** to push notifications and how the backend can **send messages** to those subscriptions.
+This is a Proof of Concept (POC) project demonstrating how to implement Web Push Notifications using ASP.NET Core Web API, WebPush (tpeczek)
+, and VAPID authentication.
 
----
+It shows how a browser client can subscribe to push notifications, and how the backend can send messages to those subscriptions.
 
-## 📌 Features
-- Generate **VAPID keys** (for secure push authentication).
-- Register **Service Worker** to handle push events in the browser.
-- Subscribe browser clients using the **Push API**.
-- Store client subscription objects in `subscriptions.json`.
-- Send push notifications with **WebPush (tpeczek)** library.
-- Display system notifications (tested on **macOS**, works on Windows/Linux too).
-- Includes full working frontend (`index.html`, `script.js`, `service-worker.js`).
+📌 Features
 
----
+	🔑 Generate VAPID keys (for secure push authentication).
 
-## 📂 Project Structure
+	🛠️ Service Worker to handle background push events.
 
-PushPoCApp/
-│
-├── Controllers/
-│ └── PushController.cs # API for subscription + sending notifications
-│
-├── wwwroot/
-│ ├── index.html # UI page with Subscribe button
-│ ├── script.js # Handles Push API + Service Worker
-│ ├── service-worker.js # Background worker to receive notifications
-│ └── icon.png # Notification icon
-│
-├── vapid.json # Generated VAPID keys (⚠️ DO NOT COMMIT)
-├── subscriptions.json # Stores client subscriptions (runtime file)
-├── Program.cs
-├── PushPoCApp.csproj
-└── README.md
+	🌐 Push API subscription from the browser.
 
-yaml
-Copy code
+	💾 Store client subscriptions in subscriptions.json (demo only).
 
----
+	📡 Send push notifications using the WebPush library.
 
-## ⚙️ Setup Instructions
+	💻 Tested on macOS, also works on Windows/Linux (Chrome, Firefox, Edge).
 
-### 1. Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [VS Code](https://code.visualstudio.com/) or any IDE
-- Modern browser (Chrome, Firefox, Edge — **Safari excluded** for now)
+📂 Project Structure
 
----
+	PushPocApp.sln
+	global.json                # Locks SDK to .NET 8.0.405
+	.gitignore                 # Ignores bin/, obj/, .vs/, etc.
+	README.md                  # Project documentation
+	PushPocApp/
+	│
+	├── PushPocApp.csproj      # Project file
+	├── Program.cs             # Entry point (minimal API setup)
+	│
+	├── Controllers/
+	│   └── PushController.cs  # API for subscription + sending notifications
+ 	│
+	├── Models/
+ 	│   ├── NotificationPayload.cs  # API Models that contain payload for send notification
+	│   └── SubscriptionDto.cs      # API Model that contain subscribed push notifications objects
+  
+	│
+	├── wwwroot/
+	│   ├── index.html         # UI with Subscribe button
+	│   ├── script.js          # Handles Push API + Service Worker
+	│   ├── service-worker.js  # Background push handler
+	│   └── icon.png           # Notification icon
+	│
+	├── vapid.json             # Generated VAPID keys (⚠️ DO NOT COMMIT)
+	└── subscriptions.json     # Stores client subscriptions (runtime file)
 
-### 2. Clone & Build
 
-```bash
-git clone https://github.com/ajkushwaha12/PushNotificationPOC.git
-cd PushNotificationPOC
-dotnet restore
+⚙️ Setup Instructions
+
+1. Prerequisites
+
+	1. .NET 8 SDK (pinned via global.json)
+
+	2. Visual Studio Code or Visual Studio 2022
+
+	3. A modern browser (Chrome, Firefox, Edge — Safari not supported)
+ 
+2. Clone & Build
+
+
+		git clone https://github.com/ajkushwaha12/PushNotificationPOC.git
+		cd PushNotificationPOC
+		dotnet restore
+
+
 3. Generate VAPID Keys
-Run the project once to auto-generate vapid.json:
 
-bash
-Copy code
-dotnet run
-Example output:
+	Run the project once — it will auto-generate vapid.json:
 
-pgsql
-Copy code
-Generated VAPID keys and saved to vapid.json
-Now listening on: http://localhost:5087
-⚠️ Important: Never commit vapid.json (private key must remain secret).
+		dotnet run --project PushPocApp
+
+
+	Example output:
+
+		Generated VAPID keys and saved to vapid.json
+		Now listening on: http://localhost:5087
 
 4. Run the App
-bash
-Copy code
-dotnet run
-Then open http://localhost:5087 in your browser.
+
+		dotnet run --project PushPocApp
+
+
+	Then open your browser at:
+			
+		 👉 http://localhost:5087
 
 5. Subscribe & Test Push
-Click the "Subscribe" button in the UI.
 
-The browser will ask for Notification Permission → Allow.
+	1. Open the app in your browser.
 
-A subscription object will be stored in subscriptions.json.
+	2. Click Subscribe → grant notification permission.
 
-To send a push notification:
+	3. A subscription object will be stored in subscriptions.json.
 
-http
-Copy code
-GET http://localhost:5087/api/push/send
-You should now see a system notification on your OS.
+	4. Send a push notification via API:
 
-⚠️ Notes & Limitations
-Requires HTTPS in production (service workers + push API need SSL).
+			POST http://localhost:5087/api/push/send
 
-Works on Chrome, Firefox, Edge.
 
-Safari uses APNs (Apple Push Notification Service) — not covered here.
+You should now see a system notification 🚀
 
-Notifications may behave differently across OS (auto-dismiss vs. sticky).
-
-Subscriptions should be stored in a database (this demo uses subscriptions.json).
 
 📚 References
-[MDN: Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API?utm_source=chatgpt.com)
 
-[MDN: Notifications API](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
+RFC 8030 – HTTP Web Push
+		
+	https://datatracker.ietf.org/doc/html/rfc8030
 
-[WebPush .NET (tpeczek)](https://github.com/web-push-libs/web-push-csharp)
+RFC 8291 – Message Encryption for Web Push
 
-[Google Web Fundamentals - Push Notifications](https://web.dev/push-notifications-overview/)
+	https://datatracker.ietf.org/doc/html/rfc8291
+
+RFC 8292 – VAPID (Voluntary Application Server Identification)
+
+	https://datatracker.ietf.org/doc/html/rfc8292
+
+Push API – W3C
+
+	https://www.w3.org/TR/push-api/
+
