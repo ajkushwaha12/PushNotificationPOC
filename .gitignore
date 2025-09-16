@@ -1,0 +1,39 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vs/
+.vscode/
+.history/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime-generated files
+subscriptions.json
+vapid.json
+
+# Package files
+*.nupkg
+*.snupkg
+
+# Backup files
+*.bak
+*.tmp
+
+# Publish folder
+publish/
